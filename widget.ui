@@ -83,7 +83,21 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QLineEdit" name="regExLine"/>
+       <widget class="QComboBox" name="regExcomboBox">
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+        <item>
+         <property name="text">
+          <string extracomment="example:[one]">\[.*\]</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string extracomment="example:012.jpg">(^0)(?=\d\d+)</string>
+         </property>
+        </item>
+       </widget>
       </item>
       <item>
        <widget class="QLineEdit" name="headAddLine"/>

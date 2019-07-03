@@ -1,7 +1,7 @@
 #include "filecontrol.h"
 #include<QFileInfoList>
 #include<QListIterator>
-#include<QRegExp>
+#include<QRegularExpression>
 #include<QDebug>
 #include<QThread>
 
@@ -22,7 +22,7 @@ void FileControl::rxRename(const QString& pattern)//模板匹配修改文件名�
     m_Dir.refresh();
     if(!m_Dir.isEmpty())
     {
-        QRegExp rx(pattern);
+        QRegularExpression rx(pattern);
         QFileInfoList info = m_Dir.entryInfoList();//获取文件夹信息
         QListIterator<QFileInfo> it(info);
         while(it.hasNext())

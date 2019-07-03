@@ -9,7 +9,6 @@ Widget::Widget(QWidget *parent) :
 {
     this->setFixedSize(420,321);
     ui->setupUi(this);
-    ui->regExLine->setText("\\[.*\\]");//正则表达式删除中括号内容，显示出来斜杠会少一个
     qDebug()<<"main ThreadId"<<QThread::currentThreadId();
     F.moveToThread(&workerThread);
     connect(&workerThread,&QThread::finished,this,&Widget::showIfThreadFin);
@@ -17,6 +16,8 @@ Widget::Widget(QWidget *parent) :
     connect(this,&Widget::rxSignal,&F,&FileControl::rxRename);
     //进程消亡时通知我
     workerThread.start();
+    ui->changeNameModButton->setEnabled(false);
+    ui->changeNameButton->setEnabled(false);
 }
 
 Widget::~Widget()
@@ -35,18 +36,23 @@ void Widget::on_changeNameButton_clicked()//文件名前添加东西
 void Widget::on_openDirButton_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
-                                                     "C:/Users/QZL/Documents/QTProject/changeFileName",
+                                                     "/home",
                                                      QFileDialog::ShowDirsOnly
                                                      | QFileDialog::DontResolveSymlinks);
 
     qDebug()<<"工作路径:"<<dir;
     F.getPath(dir);//获取工作路径
+    if(dir!="")
+    {
+        ui->changeNameModButton->setEnabled(true);
+        ui->changeNameButton->setEnabled(true);
+    }
 }
 
 void Widget::on_changeNameModButton_clicked()//模板匹配删除字符
 {
 
-    rxSignal(ui->regExLine->text());
+    rxSignal(ui->regExcomboBox->currentText());
 
 }
 
